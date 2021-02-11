@@ -14,6 +14,7 @@ public class AdventurerController : MonoBehaviour
     private bool grounded;
 
     private bool jump;
+    private bool attack;
 
     bool facingRight = true;
 
@@ -28,6 +29,7 @@ public class AdventurerController : MonoBehaviour
     {
         jump = false;
         grounded = false;
+        attack = false;
 
         theRigidBody = GetComponent<Rigidbody2D>();
         theAnimator = GetComponent<Animator>();
@@ -37,8 +39,8 @@ public class AdventurerController : MonoBehaviour
     void Update()
     {
 
-        jump = Input.GetKeyDown(KeyCode.Space);
-
+        jump = Input.GetKey(KeyCode.Space);
+        Attack();
 
         hAxis = Input.GetAxis("Horizontal");
 
@@ -83,7 +85,19 @@ public class AdventurerController : MonoBehaviour
         }
 
     }
-
+    private void Attack()
+    {
+        attack = Input.GetKey(KeyCode.L);
+        theAnimator.SetBool("isAttacking", attack);
+        if (attack == true)
+        {
+            horizontalSpeed = 0;
+        }
+        else
+        {
+            horizontalSpeed = 10;
+        }
+    }
     private void Flip()
     {
         facingRight = !facingRight;
